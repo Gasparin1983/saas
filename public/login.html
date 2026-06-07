@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Login - Plataforma</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:#F1F5F9;
+}
+
+/* CONTENEDOR */
+.container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+/* CARD */
+.card{
+    background:white;
+    padding:40px;
+    border-radius:10px;
+    width:360px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+/* TITULO */
+h2{
+    margin-bottom:20px;
+    color:#1E3A8A;
+}
+
+/* INPUTS */
+.input-group{
+    position:relative;
+}
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:14px;
+}
+
+/* TOGGLE PASSWORD */
+.toggle{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    font-size:12px;
+    color:#1E3A8A;
+}
+
+/* OPCIONES */
+.options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:13px;
+    margin:5px 0 15px 0;
+}
+.options label{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+.options a{
+    text-decoration:none;
+    color:#1E3A8A;
+}
+
+/* BOTON */
+button{
+    width:100%;
+    padding:12px;
+    background:#1E3A8A;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+button:hover{
+    background:#0F172A;
+}
+
+/* LINK */
+a.register{
+    display:block;
+    margin-top:15px;
+    text-decoration:none;
+    color:#1E3A8A;
+}
+
+/* ERROR */
+.error{
+    background:#fee2e2;
+    color:#991b1b;
+    padding:10px;
+    border-radius:6px;
+    font-size:13px;
+    display:none;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+    <div class="card">
+
+        <h2>Iniciar sesión</h2>
+
+        <div id="error" class="error">Credenciales incorrectas</div>
+
+        <form action="../public/login.php" method="POST">
+
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                <span class="toggle" onclick="togglePass()">Ver</span>
+            </div>
+
+            <div class="options">
+                <label>
+                    <input type="checkbox" name="remember"> Recordarme
+                </label>
+                <a href="#">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit">Entrar</button>
+
+        </form>
+
+        <a class="register" href="register.html">Crear cuenta</a>
+
+    </div>
+</div>
+
+<script>
+function togglePass(){
+    var p = document.getElementById("password");
+    p.type = (p.type === "password") ? "text" : "password";
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+// ❌ ERRORES
+if(params.get("error") == "usuario"){
+    Swal.fire({
+        icon: 'error',
+        title: 'Usuario no encontrado',
+        text: 'El correo no existe o está inactivo',
+        confirmButtonColor: '#1E3A8A'
+    });
+}
+
+if(params.get("error") == "pass"){
+    Swal.fire({
+        icon: 'error',
+        title: 'Contraseña incorrecta',
+        text: 'Verifica tus credenciales',
+        confirmButtonColor: '#1E3A8A'
+    });
+}
+
+if(params.get("error") == "campos"){
+    Swal.fire({
+        icon: 'warning',
+        title: 'Campos incompletos',
+        text: 'Ingresa correo y contraseña',
+        confirmButtonColor: '#1E3A8A'
+    });
+}
+
+// ✅ ÉXITO (desde registro)
+if(params.get("success") == "1"){
+    Swal.fire({
+        icon: 'success',
+        title: 'Registro exitoso',
+        text: 'Ahora puedes iniciar sesión',
+        confirmButtonColor: '#1E3A8A'
+    });
+}
+</script>
+</body>
+</html>

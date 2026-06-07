@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Registro - Plataforma</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ✅ SWEET ALERT -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:#F1F5F9;
+}
+
+.container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.card{
+    background:white;
+    padding:40px;
+    border-radius:10px;
+    width:350px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+h2{
+    margin-bottom:20px;
+    color:#1E3A8A;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#1E3A8A;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#0F172A;
+}
+
+a{
+    display:block;
+    margin-top:15px;
+    text-decoration:none;
+    color:#1E3A8A;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+    <div class="card">
+
+```
+    <h2>Crear cuenta</h2>
+
+    <form action="../public/register.php" method="POST">
+
+        <input type="text" name="nombre" placeholder="Nombre completo" required>
+
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+
+        <input type="password" name="password" placeholder="Contraseña" required>
+
+        <button type="submit">Registrarse</button>
+
+    </form>
+
+    <a href="login.html">¿Ya tienes cuenta? Inicia sesión</a>
+
+</div>
+```
+
+</div>
+
+<script>
+// 🔍 LEER PARAMETROS
+const params = new URLSearchParams(window.location.search);
+
+// ❌ ERRORES
+if(params.get("error") == "email"){
+    Swal.fire({
+        icon: 'error',
+        title: 'Correo ya registrado',
+        text: 'Este correo ya está en uso. Intenta con otro.',
+        confirmButtonColor: '#1E3A8A'
+    });
+}
+
+if(params.get("error") == "campos"){
+    Swal.fire({
+        icon: 'warning',
+        title: 'Campos incompletos',
+        text: 'Todos los campos son obligatorios',
+        confirmButtonColor: '#1E3A8A'
+    });
+}
+
+if(params.get("error") == "email_invalido"){
+    Swal.fire({
+        icon: 'error',
+        title: 'Correo inválido',
+        text: 'Ingresa un correo electrónico válido',
+        confirmButtonColor: '#1E3A8A'
+    });
+}
+
+if(params.get("error") == "server"){
+    Swal.fire({
+        icon: 'error',
+        title: 'Error del sistema',
+        text: 'Intenta nuevamente más tarde',
+        confirmButtonColor: '#1E3A8A'
+    });
+}
+
+// ✅ ÉXITO
+if(params.get("success") == "1"){
+    Swal.fire({
+        icon: 'success',
+        title: 'Registro exitoso',
+        text: 'Tu cuenta ha sido creada correctamente',
+        confirmButtonColor: '#1E3A8A'
+    });
+}
+</script>
+
+</body>
+</html>
